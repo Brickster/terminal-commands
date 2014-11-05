@@ -1,0 +1,20 @@
+# changename(1) -- change the name of a Terminal window
+
+## SYNOPSIS
+
+`changename` [(`-n`|`--name`) <name>]  
+`changename` [(`-r`|`--reset`)]  
+`changename` [(`-h`|`--help`)]
+
+## DESCRIPTION
+
+`changename` changes the name of a Terminal window. Useful when running scripts or when multiple Terminal window are open.
+
+## OPTIONS
+
+* `-n`|`--name` <name>:
+    Set the current window's title to <name>.
+* `-r`|`--reset`:
+    Reset the current window's title.
+* `-h`|`--help`:
+    Display man page.

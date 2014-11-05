@@ -1,0 +1,48 @@
+#! /bin/bash
+
+#
+# Changes the name of a Terminal window.
+#
+
+function help
+{
+    man changename
+    exit 1
+}
+
+function error
+{
+    echo -e "$1" >&2
+    exit 1
+}
+
+name=
+while getopts ":rhn:-:" opt; do
+    case $opt in
+        -)
+            case "${OPTARG}" in
+                name)
+                    name="${!OPTIND}"
+                    OPTIND=$(( $OPTIND + 1 ))
+                    ;;
+                reset)
+                    name=""
+                    ;;
+                help)
+                    help
+                    ;;
+                *)
+                    error "Unimplemented option --${OPTARG}"
+                    ;;
+            esac
+            ;;
+        h)  help;;
+        r)  name="";;
+        n)  name="$OPTARG";;
+        \?) error "Invalid option: -$OPTARG";;
+        :)  error "Option -$OPTARG requires an argument.";;
+        *)  error "Unimplemented option: -$OPTARG";;
+    esac
+done
+
+echo -n -e "\033]0;$name\007"
