@@ -21,9 +21,37 @@ none='\x1B[0m'
 colors=('black' 'dark_gray' 'red' 'light_red' 'green' 'light_green' 'orange' 'yellow' 'blue'
     'light_blue' 'purple' 'light_purple' 'cyan' 'light_cyan' 'light_gray' 'white' 'none')
 
+function error
+{
+    echo "$1" >&2
+    exit 1
+}
+
 function color
 {
     echo -e "${!1}$2${none}"
+}
+
+function print_colors
+{
+    for a_color in "${colors[@]}"; do
+        echo "$a_color"
+    done
+    exit 0
+}
+
+function print_color_examples
+{
+    for a_color in "${colors[@]}"; do
+        color ${a_color} ${a_color}
+    done
+    exit 0
+}
+
+function help
+{
+    man colortext
+    exit 0
 }
 
 function validate_color
@@ -37,6 +65,25 @@ function validate_color
     echo "$1 is not a valid color. Must be one of (${colors[@]})" >&2
     exit 1
 }
+
+testing=
+while getopts ":hce-:" opt; do
+    case $opt in
+        -)
+            case "${OPTARG}" in
+                colors) print_colors;;
+                help)   help;;
+                *)      error "Unimplemented option --${OPTARG}";;
+            esac
+            ;;
+        c)  print_colors;;
+        e)  print_color_examples;;
+        h)  help;;
+        \?) error "Invalid option: -$OPTARG";;
+        :)  error "Option -$OPTARG requires an argument.";;
+        *)  error "Unimplemented option: -$OPTARG";;
+    esac
+done
 
 validate_color "$1"
 color "$1" "$2"

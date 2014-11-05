@@ -1,0 +1,23 @@
+# colortext (1) -- echo colored text
+
+## SYNOPSIS
+
+`colortext` <color> <text>  
+`colortext` [`-c`|`--colors`]  
+`colortext` [`-e`|`--examples`]  
+`colortext` [`-h`|`--help`]
+
+## DESCRIPTION
+
+`colortext` outputs text in a given color.
+
+## OPTIONS
+
+* <color>:
+    The color to use when printing the text. It must be contained in the list from `colortext` ( [`-c`|`--colors`] | [`-e`|`--examples`] )
+* `-c`|`--colors`:
+    Print a list of available colors without coloring.
+* `-e`|`--examples`:
+    Print a list of available colors in their respective color.
+* `-h`|`--help`:
+    Display man page.
