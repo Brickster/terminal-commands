@@ -1,0 +1,42 @@
+#! /bin/bash
+
+black='\x1B[0;30m'
+dark_gray='\x1B[1;30m'
+red='\x1B[0;31m'
+light_red='\x1B[1;31m'
+green='\x1B[0;32m'
+light_green='\x1B[1;32m'
+orange='\x1B[0;33m'
+yellow='\x1B[1;33m'
+blue='\x1B[0;34m'
+light_blue='\x1B[1;34m'
+purple='\x1B[0;35m'
+light_purple='\x1B[1;35m'
+cyan='\x1B[0;36m'
+light_cyan='\x1B[1;36m'
+light_gray='\x1B[0;37m'
+white='\x1B[1;37m'
+none='\x1B[0m'
+
+colors=('black' 'dark_gray' 'red' 'light_red' 'green' 'light_green' 'orange' 'yellow' 'blue'
+    'light_blue' 'purple' 'light_purple' 'cyan' 'light_cyan' 'light_gray' 'white' 'none')
+
+function color
+{
+    echo -e "${!1}$2${none}"
+}
+
+function validate_color
+{
+    for a_color in "${colors[@]}"; do
+        if [[ "$a_color" == "$1" ]]; then
+            return 0
+        fi
+    done
+
+    echo "$1 is not a valid color. Must be one of (${colors[@]})" >&2
+    exit 1
+}
+
+validate_color "$1"
+color "$1" "$2"
