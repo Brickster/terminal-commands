@@ -1,5 +1,9 @@
 #! /bin/bash
 
+#
+# Echo colored text.
+#
+
 black='\x1B[0;30m'
 dark_gray='\x1B[1;30m'
 red='\x1B[0;31m'
@@ -21,17 +25,31 @@ none='\x1B[0m'
 colors=('black' 'dark_gray' 'red' 'light_red' 'green' 'light_green' 'orange' 'yellow' 'blue'
     'light_blue' 'purple' 'light_purple' 'cyan' 'light_cyan' 'light_gray' 'white' 'none')
 
+#
+# Echos text to strerr.
+#
+# $1: the text to echo
+#
 function error
 {
     echo "$1" >&2
     exit 1
 }
 
+#
+# Echos text in a given color.
+#
+# $1: the color to echo to the text as
+# $2: the text to echo
+#
 function color
 {
     echo -e "${!1}$2${none}"
 }
 
+#
+# Prints all available colors with no coloring.
+#
 function print_colors
 {
     for a_color in "${colors[@]}"; do
@@ -40,6 +58,9 @@ function print_colors
     exit 0
 }
 
+#
+# Prints all available colors in their respective color.
+#
 function print_color_examples
 {
     for a_color in "${colors[@]}"; do
@@ -48,12 +69,20 @@ function print_color_examples
     exit 0
 }
 
+#
+# Shows colortext man page.
+#
 function help
 {
     man colortext
     exit 0
 }
 
+#
+# Validates that a color is available for printing:
+#
+# $1: the color to validate
+#
 function validate_color
 {
     for a_color in "${colors[@]}"; do

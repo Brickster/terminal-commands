@@ -4,12 +4,20 @@
 # Changes the name of a Terminal window.
 #
 
+#
+# Shows changename man page.
+#
 function help
 {
     man changename
     exit 1
 }
 
+#
+# Echos text to strerr.
+#
+# $1: the text to echo
+#
 function error
 {
     echo -e "$1" >&2
@@ -45,4 +53,5 @@ while getopts ":rhn:-:" opt; do
     esac
 done
 
+# change the name of the current window
 echo -n -e "\033]0;$name\007"
