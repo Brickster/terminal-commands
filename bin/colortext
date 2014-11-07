@@ -71,9 +71,10 @@ while getopts ":hce-:" opt; do
     case $opt in
         -)
             case "${OPTARG}" in
-                colors) print_colors;;
-                help)   help;;
-                *)      error "Unimplemented option --${OPTARG}";;
+                colors)     print_colors;;
+                examples)   print_color_examples;;
+                help)       help;;
+                *)          error "Unimplemented option --${OPTARG}";;
             esac
             ;;
         c)  print_colors;;
