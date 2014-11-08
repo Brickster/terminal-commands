@@ -2,7 +2,7 @@
 
 A collection of bash commands
 
-## changename
+## [changename](man/man1/changename.1.html)
 
 Change the name of a Terminal window.
 
@@ -10,9 +10,9 @@ Change the name of a Terminal window.
     changename [(-r|--reset)]
     changename [(-h|--help)]
 
-## colortext
+## [colortext](man/man1/colortext.1.html)
 
-Echo colored text
+Echo colored text.
 
     colortext <color> <text>
     colortext [-c|--color]
