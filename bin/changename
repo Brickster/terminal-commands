@@ -24,34 +24,28 @@ function error
     exit 1
 }
 
-name=
-while getopts ":rhn:-:" opt; do
+function name
+{
+    # change the name of the current window
+    echo -n -e "\033]0;$1\007"
+    exit 0
+}
+
+while getopts ":rh-:" opt; do
     case $opt in
         -)
             case "${OPTARG}" in
-                name)
-                    name="${!OPTIND}"
-                    OPTIND=$(( $OPTIND + 1 ))
-                    ;;
-                reset)
-                    name=""
-                    ;;
-                help)
-                    help
-                    ;;
-                *)
-                    error "Unimplemented option --${OPTARG}"
-                    ;;
+                reset)  name "";;
+                help)   help;;
+                *)      error "Unimplemented option --${OPTARG}";;
             esac
             ;;
         h)  help;;
-        r)  name="";;
-        n)  name="$OPTARG";;
+        r)  name "";;
         \?) error "Invalid option: -$OPTARG";;
         :)  error "Option -$OPTARG requires an argument.";;
         *)  error "Unimplemented option: -$OPTARG";;
     esac
 done
 
-# change the name of the current window
-echo -n -e "\033]0;$name\007"
+name "$1"

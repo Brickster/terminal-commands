@@ -2,7 +2,7 @@
 
 ## SYNOPSIS
 
-`changename` [(`-n`|`--name`) <name>]  
+`changename` <name>  
 `changename` [(`-r`|`--reset`)]  
 `changename` [(`-h`|`--help`)]
 
@@ -12,7 +12,7 @@
 
 ## OPTIONS
 
-* `-n`|`--name` <name>:
+* <name>:
     Set the current window's title to <name>.
 * `-r`|`--reset`:
     Reset the current window's title.
