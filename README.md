@@ -6,7 +6,7 @@ A collection of bash commands
 
 Change the name of a Terminal window.
 
-    changename [<name>]
+    changename <name>
     changename [(-r|--reset)]
     changename [(-h|--help)]
 
