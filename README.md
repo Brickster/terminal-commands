@@ -14,7 +14,7 @@ Change the name of a Terminal window.
 
 Echo colored text.
 
-    colortext <color> <text>
+    colortext <color> [-n] <text>
     colortext [-c|--color]
     colortext [-e|--examples]
     colortext [-h|--help]

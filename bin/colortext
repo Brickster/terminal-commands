@@ -44,7 +44,30 @@ function error
 #
 function color
 {
-    echo -e "${!1}$2${none}"
+    use_color="$1"
+
+    args=($@) # so I can split the input
+    args=(${args[@]:1})
+
+    newline=true
+    while getopts ":n" opt "${args[@]}"; do
+        case $opt in
+            n)  newline=false;;
+            \?) error "Invalid option: -$OPTARG";;
+            :)  error "Option -$OPTARG requires an argument.";;
+            *)  error "Unimplemented option: -$OPTARG";;
+        esac
+    done
+
+    # get the text, it'll be at the end of the parsed arguments
+    OPTIND=$(( $OPTIND - 1 ))
+    text="${args[$OPTIND]}"
+
+    if $newline; then
+        echo -e "${!use_color}$text${none}"
+    else
+        echo -e -n "${!use_color}$text${none}"
+    fi
 }
 
 #
@@ -94,7 +117,6 @@ function validate_color
     error "$1 is not a valid color. Must be one of (${colors[@]})"
 }
 
-testing=
 while getopts ":hce-:" opt; do
     case $opt in
         -)
@@ -115,4 +137,4 @@ while getopts ":hce-:" opt; do
 done
 
 validate_color "$1"
-color "$1" "$2"
+color "$@"

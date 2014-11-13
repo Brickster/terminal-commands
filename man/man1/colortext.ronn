@@ -2,7 +2,7 @@
 
 ## SYNOPSIS
 
-`colortext` <color> <text>  
+`colortext` <color> [`-n`] <text>  
 `colortext` [`-c`|`--colors`]  
 `colortext` [`-e`|`--examples`]  
 `colortext` [`-h`|`--help`]
@@ -15,9 +15,15 @@
 
 * <color>:
     The color to use when printing the text. It must be contained in the list from `colortext` ( [`-c`|`--colors`] | [`-e`|`--examples`] )
+
+* `-n`:
+    Do not print the trailing newline.
+
 * `-c`|`--colors`:
     Print a list of available colors without coloring.
+
 * `-e`|`--examples`:
     Print a list of available colors in their respective color.
+
 * `-h`|`--help`:
     Display man page.

@@ -7,7 +7,7 @@
 \fBcolortext\fR \- echo colored text
 .
 .SH "SYNOPSIS"
-\fBcolortext\fR \fIcolor\fR \fItext\fR
+\fBcolortext\fR \fIcolor\fR [\fB\-n\fR] \fItext\fR
 .
 .br
 \fBcolortext\fR [\fB\-c\fR|\fB\-\-colors\fR]
@@ -26,6 +26,10 @@
 .TP
 \fIcolor\fR
 The color to use when printing the text\. It must be contained in the list from \fBcolortext\fR ( [\fB\-c\fR|\fB\-\-colors\fR] | [\fB\-e\fR|\fB\-\-examples\fR] )
+.
+.TP
+\fB\-n\fR
+Do not print the trailing newline\.
 .
 .TP
 \fB\-c\fR|\fB\-\-colors\fR
