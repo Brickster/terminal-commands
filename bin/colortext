@@ -91,8 +91,7 @@ function validate_color
         fi
     done
 
-    echo "$1 is not a valid color. Must be one of (${colors[@]})" >&2
-    exit 1
+    error "$1 is not a valid color. Must be one of (${colors[@]})"
 }
 
 testing=
