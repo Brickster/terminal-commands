@@ -114,7 +114,8 @@ function validate_color
         fi
     done
 
-    error "$1 is not a valid color. Must be one of (${colors[@]})"
+    error_message="$1 is not a valid color. Must be one of (${colors[@]})"
+    error "$error_message"
 }
 
 while getopts ":hce-:" opt; do
