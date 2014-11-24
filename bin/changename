@@ -31,21 +31,24 @@ function name
     exit 0
 }
 
-while getopts ":rh-:" opt; do
+new_name="$1"
+while getopts ":rhd-:" opt; do
     case $opt in
         -)
             case "${OPTARG}" in
-                reset)  name "";;
-                help)   help;;
-                *)      error "Unimplemented option --${OPTARG}";;
+                directory)  new_name="${PWD##*/}";;
+                reset)      new_name="";;
+                help)       help;;
+                *)          error "Unimplemented option --${OPTARG}";;
             esac
             ;;
+        d)  new_name="${PWD##*/}";;
         h)  help;;
-        r)  name "";;
+        r)  new_name="";;
         \?) error "Invalid option: -$OPTARG";;
         :)  error "Option -$OPTARG requires an argument.";;
         *)  error "Unimplemented option: -$OPTARG";;
     esac
 done
 
-name "$1"
+name "$new_name"

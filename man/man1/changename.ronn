@@ -4,7 +4,8 @@
 
 `changename` <name>  
 `changename` [(`-r`|`--reset`)]  
-`changename` [(`-h`|`--help`)]
+`changename` [(`-h`|`--help`)]  
+`changename` [(`-d`|`--directory`)]
 
 ## DESCRIPTION
 
@@ -14,7 +15,12 @@
 
 * <name>:
     Set the current window's title to <name>.
+
 * `-r`|`--reset`:
     Reset the current window's title.
+
 * `-h`|`--help`:
     Display man page.
+
+* `-d`|`--directory`:
+    Use the current directory's name.

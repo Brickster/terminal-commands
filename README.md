@@ -9,6 +9,7 @@ Change the name of a Terminal window.
     changename <name>
     changename [(-r|--reset)]
     changename [(-h|--help)]
+    changename [(-d|--directory)]
 
 ## [colortext](man/man1/colortext.1.html)
 
