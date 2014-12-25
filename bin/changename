@@ -24,6 +24,11 @@ function error
     exit 1
 }
 
+#
+# Set the name of the current terminal window.
+#
+# $1: the name
+#
 function name
 {
     # change the name of the current window
