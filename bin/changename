@@ -27,23 +27,6 @@ function error
 }
 
 #
-# Determines if an array contains a given element.
-#
-# $1: the element to find
-# $2: the array to search in
-#
-function array_contains
-{
-    local e
-    for e in "${@:2}"; do
-        if [[ "$e" == "$1" ]]; then
-            return 0
-        fi
-    done
-    return 1
-}
-
-#
 # Set the name of the current terminal window.
 #
 # $1: the name
@@ -53,6 +36,30 @@ function name
     # change the name of the current window
     echo -n -e "\033]0;$1\007"
     exit 0
+}
+
+#
+# Determines if an alias already exists among a set of definitions.
+#
+# $1: alias name
+# $2: alias directory path
+# $3: the list of alias definitinos
+#
+function alias_exists
+{
+    local alias_name="$1"
+    local directory_path="$2"
+    local alias_definitions=(${@:3})
+
+    local alias_definition=
+    for alias_definition in "${alias_definitions[@]}"; do
+        alias_definition=(${alias_definition/=/ })
+        if [[ "$alias_name" == "${alias_definition[0]}" ]] || [[ "$directory_path" == "${alias_definition[1]}" ]] ; then
+            return 0
+        fi
+    done
+
+    return 1
 }
 
 #
@@ -75,23 +82,11 @@ function create_alias
     fi
 
     # load existing aliases
-    alias_definitions=$(cat "$ALIAS_FILE")
-    IFS=$'\n' read -rd '' -a alias_definitions <<< "$alias_definitions"
+    existing_alias_definitions=$(cat "$ALIAS_FILE")
+    IFS=$'\n' read -rd '' -a existing_alias_definitions <<< "$existing_alias_definitions"
 
-    # get aliases and definitions
-    local alias=
-    local aliases=()
-    local directories=()
-    for alias in "${alias_definitions[@]}"; do
-        local regex="(.*)=(.*)"
-        if [[ "$alias" =~ $regex ]]; then
-            aliases+=("${BASH_REMATCH[1]}")
-            directories+=("${BASH_REMATCH[2]}")
-        fi
-    done
-
-    if array_contains "$alias_to_create" "${aliases[@]}" || array_contains "$alias_directory" "${directories[@]}"; then
-        error "alias already exists"
+    if alias_exists "$alias_to_create" "$alias_directory" "${existing_alias_definitions[@]}"; then
+        error "error: alias already in use or directory already aliased"
     else
         echo "$alias_to_create=$alias_directory" >> "$ALIAS_FILE"
     fi
