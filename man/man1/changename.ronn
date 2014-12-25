@@ -5,6 +5,7 @@
 `changename` <name><br>
 `changename alias` <alias> [<directory>]<br>
 `changename aliases`<br>
+`changename unalias` <alias><br>
 `changename` [(`-r`|`--reset`)]<br>
 `changename` [(`-h`|`--help`)]<br>
 `changename` [(`-d`|`--directory`)]
@@ -23,6 +24,9 @@
 
 * `aliases` :
     Print existing alias definitions.
+
+* `unalias` <alias>:
+    Delete an alias definition.
 
 * `-r`|`--reset`:
     Reset the current window's title.

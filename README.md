@@ -10,6 +10,7 @@ Change the name of a Terminal window.
 changename <name>
 changename alias <alias> [<directory>]
 changename aliases
+changename unalias <alias>
 changename [(-r|--reset)]
 changename [(-h|--help)]
 changename [(-d|--directory)]

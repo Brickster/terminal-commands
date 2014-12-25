@@ -102,6 +102,31 @@ function create_alias
     fi
 }
 
+#
+# Delete an alias.
+#
+# $1: the alias to delete
+#
+function delete_alias
+{
+    alias_name="$1"
+
+    # load existing aliases
+    alias_definitions=$(cat "$ALIAS_FILE")
+    IFS=$'\n' read -rd '' -a alias_definitions <<< "$alias_definitions"
+
+    line=1 # sed is 1 based
+    for alias_definition in "${alias_definitions[@]}"; do
+        regex="^$alias_name=.*$"
+        if [[ "$alias_definition" =~ $regex ]]; then
+            sed -i ".backup" "${line}d" "$ALIAS_FILE"
+            rm -f "${ALIAS_FILE}.backup"
+            return 0
+        fi
+        ((line++))
+    done
+}
+
 new_name="$1"
 while getopts ":rhd-:" opt; do
     case $opt in
@@ -125,6 +150,8 @@ OPTIND=1
 
 if [[ "$1" =~ ^alias$ ]]; then
     create_alias "${@:2}"
+elif [[ "$1" =~ ^unalias$ ]]; then
+    delete_alias "${@:2}"
 elif [[ "$1" =~ ^aliases$ ]]; then
     print_aliases
 else
