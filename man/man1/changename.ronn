@@ -4,6 +4,7 @@
 
 `changename` <name><br>
 `changename alias` <alias> [<directory>]<br>
+`changename aliases`<br>
 `changename` [(`-r`|`--reset`)]<br>
 `changename` [(`-h`|`--help`)]<br>
 `changename` [(`-d`|`--directory`)]
@@ -19,6 +20,9 @@
 
 * `alias` <alias> [<directory>]:
     Create an alias for a directory. If no directory is supplied, the working directory is used.
+
+* `aliases` :
+    Print existing alias definitions.
 
 * `-r`|`--reset`:
     Reset the current window's title.

@@ -9,6 +9,7 @@ Change the name of a Terminal window.
 ```bash
 changename <name>
 changename alias <alias> [<directory>]
+changename aliases
 changename [(-r|--reset)]
 changename [(-h|--help)]
 changename [(-d|--directory)]

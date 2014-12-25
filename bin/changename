@@ -63,6 +63,16 @@ function alias_exists
 }
 
 #
+# Prints the list of existing aliases.
+#
+function print_aliases
+{
+    if [[ -e "$ALIAS_FILE" ]]; then
+        cat "$ALIAS_FILE"
+    fi
+}
+
+#
 # Create a directory alias.
 #
 # $1: the alias
@@ -115,6 +125,8 @@ OPTIND=1
 
 if [[ "$1" =~ ^alias$ ]]; then
     create_alias "${@:2}"
+elif [[ "$1" =~ ^aliases$ ]]; then
+    print_aliases
 else
     name "$new_name"
 fi
