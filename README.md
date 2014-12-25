@@ -6,16 +6,20 @@ A collection of bash commands
 
 Change the name of a Terminal window.
 
-    changename <name>
-    changename [(-r|--reset)]
-    changename [(-h|--help)]
-    changename [(-d|--directory)]
+```bash
+changename <name>
+changename [(-r|--reset)]
+changename [(-h|--help)]
+changename [(-d|--directory)]
+```
 
 ## [colortext](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Brickstertwo/commands/master/man/man1/colortext.1.html)
 
 Echo colored text.
 
-    colortext <color> [-n] <text>
-    colortext [-c|--color]
-    colortext [-e|--examples]
-    colortext [-h|--help]
+```bash
+colortext <color> [-n] <text>
+colortext [-c|--color]
+colortext [-e|--examples]
+colortext [-h|--help]
+```
