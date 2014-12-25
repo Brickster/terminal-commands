@@ -4,6 +4,8 @@
 # Changes the name of a Terminal window.
 #
 
+ALIAS_FILE="$HOME/.changename_aliases"
+
 #
 # Shows changename man page.
 #
@@ -25,6 +27,23 @@ function error
 }
 
 #
+# Determines if an array contains a given element.
+#
+# $1: the element to find
+# $2: the array to search in
+#
+function array_contains
+{
+    local e
+    for e in "${@:2}"; do
+        if [[ "$e" == "$1" ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+#
 # Set the name of the current terminal window.
 #
 # $1: the name
@@ -34,6 +53,48 @@ function name
     # change the name of the current window
     echo -n -e "\033]0;$1\007"
     exit 0
+}
+
+#
+# Create a directory alias.
+#
+# $1: the alias
+# $2: (optional) the directory to alias. If not specified, the current directory is used.
+#
+function create_alias
+{
+    alias_to_create="$1"
+    alias_directory="${2:-$PWD}"
+
+    if [[ -z "$alias_to_create" ]]; then
+        error "usage: changename alias <name> [<directory>]"
+    fi
+
+    if [[ ! -e "$ALIAS_FILE" ]]; then
+        touch "$ALIAS_FILE"
+    fi
+
+    # load existing aliases
+    alias_definitions=$(cat "$ALIAS_FILE")
+    IFS=$'\n' read -rd '' -a alias_definitions <<< "$alias_definitions"
+
+    # get aliases and definitions
+    local alias=
+    local aliases=()
+    local directories=()
+    for alias in "${alias_definitions[@]}"; do
+        local regex="(.*)=(.*)"
+        if [[ "$alias" =~ $regex ]]; then
+            aliases+=("${BASH_REMATCH[1]}")
+            directories+=("${BASH_REMATCH[2]}")
+        fi
+    done
+
+    if array_contains "$alias_to_create" "${aliases[@]}" || array_contains "$alias_directory" "${directories[@]}"; then
+        error "alias already exists"
+    else
+        echo "$alias_to_create=$alias_directory" >> "$ALIAS_FILE"
+    fi
 }
 
 new_name="$1"
@@ -55,5 +116,10 @@ while getopts ":rhd-:" opt; do
         *)  error "Unimplemented option: -$OPTARG";;
     esac
 done
+OPTIND=1
 
-name "$new_name"
+if [[ "$1" =~ ^alias$ ]]; then
+    create_alias "${@:2}"
+else
+    name "$new_name"
+fi
