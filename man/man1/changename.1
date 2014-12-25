@@ -1,13 +1,16 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "CHANGENAME" "1" "November 2014" "" ""
+.TH "CHANGENAME" "1" "December 2014" "" ""
 .
 .SH "NAME"
 \fBchangename\fR \- change the name of a Terminal window
 .
 .SH "SYNOPSIS"
 \fBchangename\fR \fIname\fR
+.
+.br
+\fBchangename alias\fR \fIalias\fR [\fIdirectory\fR]
 .
 .br
 \fBchangename\fR [(\fB\-r\fR|\fB\-\-reset\fR)]
@@ -26,6 +29,10 @@
 .TP
 \fIname\fR
 Set the current window\'s title to \fIname\fR\.
+.
+.TP
+\fBalias\fR \fIalias\fR [\fIdirectory\fR]
+Create an alias for a directory\. If no directory is supplied, the working directory is used\.
 .
 .TP
 \fB\-r\fR|\fB\-\-reset\fR

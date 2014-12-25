@@ -2,9 +2,10 @@
 
 ## SYNOPSIS
 
-`changename` <name>  
-`changename` [(`-r`|`--reset`)]  
-`changename` [(`-h`|`--help`)]  
+`changename` <name><br>
+`changename alias` <alias> [<directory>]<br>
+`changename` [(`-r`|`--reset`)]<br>
+`changename` [(`-h`|`--help`)]<br>
 `changename` [(`-d`|`--directory`)]
 
 ## DESCRIPTION
@@ -15,6 +16,9 @@
 
 * <name>:
     Set the current window's title to <name>.
+
+* `alias` <alias> [<directory>]:
+    Create an alias for a directory. If no directory is supplied, the working directory is used.
 
 * `-r`|`--reset`:
     Reset the current window's title.
