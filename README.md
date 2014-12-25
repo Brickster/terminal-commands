@@ -13,7 +13,7 @@ changename aliases
 changename unalias <alias>
 changename [(-r|--reset)]
 changename [(-h|--help)]
-changename [(-d|--directory)]
+changename [(-d|--directory)] [(-a|--use-alias)]
 ```
 
 ## [colortext](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Brickstertwo/commands/master/man/man1/colortext.1.html)

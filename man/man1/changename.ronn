@@ -8,7 +8,7 @@
 `changename unalias` <alias><br>
 `changename` [(`-r`|`--reset`)]<br>
 `changename` [(`-h`|`--help`)]<br>
-`changename` [(`-d`|`--directory`)]
+`changename` [(`-d`|`--directory`)] [(`-a`|`--use-alias`)]
 
 ## DESCRIPTION
 
@@ -36,3 +36,6 @@
 
 * `-d`|`--directory`:
     Use the current directory's name.
+
+* `-a`|`--use-alias`:
+    Name the window according to the working directory's alias.

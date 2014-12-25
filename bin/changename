@@ -127,20 +127,50 @@ function delete_alias
     done
 }
 
+#
+# Name the terminal window according to the directory's alias.
+#
+function use_alias
+{
+    local directory="$PWD"
+
+    # load existing aliases
+    local alias_definitions=$(cat "$ALIAS_FILE")
+    IFS=$'\n' read -rd '' -a alias_definitions <<< "$alias_definitions"
+
+    local alias_definition=
+    for alias_definition in "${alias_definitions[@]}"; do
+        regex="^(.*)=$directory$"
+        if [[ "$alias_definition" =~ $regex ]]; then
+            name "${BASH_REMATCH[1]}"
+        fi
+    done
+
+    error "error: no alias for directory '$PWD'"
+}
+
 new_name="$1"
-while getopts ":rhd-:" opt; do
+while getopts ":rhda-:" opt; do
     case $opt in
         -)
             case "${OPTARG}" in
                 directory)  new_name="${PWD##*/}";;
                 reset)      new_name="";;
+                use-alias)
+                    use_alias
+                    exit 0
+                    ;;
                 help)       help;;
                 *)          error "Unimplemented option --${OPTARG}";;
             esac
             ;;
         d)  new_name="${PWD##*/}";;
-        h)  help;;
         r)  new_name="";;
+        a)
+            use_alias
+            exit 0
+            ;;
+        h)  help;;
         \?) error "Invalid option: -$OPTARG";;
         :)  error "Option -$OPTARG requires an argument.";;
         *)  error "Unimplemented option: -$OPTARG";;
