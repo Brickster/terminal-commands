@@ -2,7 +2,7 @@
 
 A collection of bash commands
 
-## [changename](man/man1/changename.1.html)
+## [changename](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Brickstertwo/commands/master/man/man1/changename.1.html)
 
 Change the name of a Terminal window.
 
@@ -11,7 +11,7 @@ Change the name of a Terminal window.
     changename [(-h|--help)]
     changename [(-d|--directory)]
 
-## [colortext](man/man1/colortext.1.html)
+## [colortext](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Brickstertwo/commands/master/man/man1/colortext.1.html)
 
 Echo colored text.
 
