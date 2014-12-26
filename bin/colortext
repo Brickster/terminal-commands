@@ -44,14 +44,10 @@ function error
 #
 function color
 {
-    use_color="$1"
-    use_color="$(echo "$use_color" | sed 's/-/_/g')"
-
-    args=($@) # so I can split the input
-    args=(${args[@]:1})
+    use_color="$(echo "$1" | sed 's/-/_/g')"
 
     newline=true
-    while getopts ":n" opt "${args[@]}"; do
+    while getopts ":n" opt "${@:2}"; do
         case $opt in
             n)  newline=false;;
             \?) error "Invalid option: -$OPTARG";;
@@ -60,10 +56,7 @@ function color
         esac
     done
 
-    # get the text, it'll be at the end of the parsed arguments
-    OPTIND=$(( $OPTIND - 1 ))
-    text="${args[$OPTIND]}"
-
+    text="${@: -1}"
     if $newline; then
         echo -e "${!use_color}$text${none}"
     else
