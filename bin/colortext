@@ -81,7 +81,7 @@ function print_colors
 function print_color_examples
 {
     for a_color in "${colors[@]}"; do
-        color ${a_color} ${a_color}
+        color "$a_color" "$a_color"
     done
     exit 0
 }
