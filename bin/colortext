@@ -22,8 +22,8 @@ light_gray='\x1B[0;37m'
 white='\x1B[1;37m'
 none='\x1B[0m'
 
-colors=('black' 'dark_gray' 'red' 'light_red' 'green' 'light_green' 'orange' 'yellow' 'blue'
-    'light_blue' 'purple' 'light_purple' 'cyan' 'light_cyan' 'light_gray' 'white' 'none')
+colors=('black' 'dark-gray' 'red' 'light-red' 'green' 'light-green' 'orange' 'yellow' 'blue'
+    'light-blue' 'purple' 'light-purple' 'cyan' 'light-cyan' 'light-gray' 'white' 'none')
 
 #
 # Echos text to strerr.
@@ -45,6 +45,7 @@ function error
 function color
 {
     use_color="$1"
+    use_color="$(echo "$use_color" | sed 's/-/_/g')"
 
     args=($@) # so I can split the input
     args=(${args[@]:1})
