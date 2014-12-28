@@ -13,6 +13,9 @@
 \fBchangename alias\fR \fIalias\fR [\fIdirectory\fR]
 .
 .br
+\fBchangename alias\fR (\fB\-g\fR|\fB\-\-get\fR) (\fIalias\fR|\fIdirectory\fR)
+.
+.br
 \fBchangename aliases\fR
 .
 .br
@@ -39,6 +42,10 @@ Set the current window\'s title to \fIname\fR\.
 .TP
 \fBalias\fR \fIalias\fR [\fIdirectory\fR]
 Create an alias for a directory\. If no directory is supplied, the working directory is used\.
+.
+.TP
+\fB\-g\fR|\fB\-\-get\fR (\fIalias\fR|\fIdirectory\fR)
+Switches subcommand \fBalias\fR into get mode\. The input can be either an \fIalias\fR or a \fIdirectory\fR and the matching value for an alias definition is printed, if any\.
 .
 .TP
 \fBaliases\fR

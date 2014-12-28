@@ -4,6 +4,7 @@
 
 `changename` <name><br>
 `changename alias` <alias> [<directory>]<br>
+`changename alias` (`-g`|`--get`) (<alias>|<directory>)<br>
 `changename aliases`<br>
 `changename unalias` <alias><br>
 `changename` [(`-r`|`--reset`)]<br>
@@ -21,6 +22,9 @@
 
 * `alias` <alias> [<directory>]:
     Create an alias for a directory. If no directory is supplied, the working directory is used.
+
+* `-g`|`--get` (<alias>|<directory>):
+    Switches subcommand `alias` into get mode. The input can be either an <alias> or a <directory> and the matching value for an alias definition is printed, if any.
 
 * `aliases` :
     Print existing alias definitions.

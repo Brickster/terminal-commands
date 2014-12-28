@@ -72,6 +72,34 @@ function alias_exists
 }
 
 #
+# Prints the matching value of an alias definition by alias name or directory.
+#
+# $1: the search term
+#
+function get_alias
+{
+    local search="$1"
+
+    # get existing aliases
+    local aliases=$(cat "$ALIAS_FILE")
+    IFS=$'\n' read -rd '' -a aliases <<< "$aliases"
+
+    local alias_definition=
+    for alias_definition in "${aliases[@]}"; do
+        regex="^$search=(.*)$"
+        if [[ "$alias_definition" =~ $regex ]]; then
+            echo "${BASH_REMATCH[1]}"
+            return 0
+        fi
+        regex="^(.*)=$search$"
+        if [[ "$alias_definition" =~ $regex ]]; then
+            echo "${BASH_REMATCH[1]}"
+            return 0
+        fi
+    done
+}
+
+#
 # Prints the list of existing aliases.
 #
 function print_aliases
@@ -133,6 +161,18 @@ function delete_alias
 }
 
 #
+# Determine which alias subcommand is being used: get_alias or create_alias.
+#
+function which_alias
+{
+    if [[ "$1" == "-g" ]] || [[ "$1" == "--get" ]]; then
+        get_alias "$2"
+    else
+        create_alias "$@"
+    fi
+}
+
+#
 # Name the terminal window according to the directory's alias.
 #
 function use_alias
@@ -184,7 +224,7 @@ done
 OPTIND=1
 
 if [[ "$1" =~ ^alias$ ]]; then
-    create_alias "${@:2}"
+    which_alias "${@:2}"
 elif [[ "$1" =~ ^unalias$ ]]; then
     delete_alias "${@:2}"
 elif [[ "$1" =~ ^aliases$ ]]; then
