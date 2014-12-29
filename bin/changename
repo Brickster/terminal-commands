@@ -173,16 +173,18 @@ function rename_alias
 #
 function delete_alias
 {
-    alias_name="$1"
+    search="$1"
 
     # load existing aliases
     alias_definitions=$(cat "$ALIAS_FILE")
     IFS=$'\n' read -rd '' -a alias_definitions <<< "$alias_definitions"
 
+    name_regex="^$search=.*$"
+    directory_regex="^.*=$search$"
+
     line=1 # sed is 1 based
     for alias_definition in "${alias_definitions[@]}"; do
-        regex="^$alias_name=.*$"
-        if [[ "$alias_definition" =~ $regex ]]; then
+        if [[ "$alias_definition" =~ $name_regex ]] || [[ "$alias_definition" =~ $directory_regex ]]; then
             sed -i ".backup" "${line}d" "$ALIAS_FILE"
             rm -f "${ALIAS_FILE}.backup"
             return 0

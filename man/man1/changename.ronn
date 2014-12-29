@@ -7,7 +7,7 @@
 `changename alias` (`-g`|`--get`) (<alias>|<directory>)<br>
 `changename alias` (`-r`|`--rename`) <from> <to><br>
 `changename aliases`<br>
-`changename unalias` <alias><br>
+`changename unalias` (<alias>|<directory>)<br>
 `changename` [(`-r`|`--reset`)]<br>
 `changename` [(`-h`|`--help`)]<br>
 `changename` [(`-d`|`--directory`)] [(`-a`|`--use-alias`)]
@@ -33,8 +33,8 @@
 * `aliases` :
     Print existing alias definitions.
 
-* `unalias` <alias>:
-    Delete an alias definition.
+* `unalias` (<alias>|<directory>):
+    Delete an alias definition by alias name or directory.
 
 * `-r`|`--reset`:
     Reset the current window's title.

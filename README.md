@@ -12,7 +12,7 @@ changename alias <alias> [<directory>]
 changename alias (-g|--get) (<alias>|<directory>)
 changename alias (-r|--rename) <from> <to>
 changename aliases
-changename unalias <alias>
+changename unalias (<alias>|<directory>)
 changename [(-r|--reset)]
 changename [(-h|--help)]
 changename [(-d|--directory)] [(-a|--use-alias)]
