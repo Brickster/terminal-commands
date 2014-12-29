@@ -136,6 +136,37 @@ function create_alias
 }
 
 #
+# Rename an alias.
+#
+# $1: the alias to rename
+# $2: the new alias name
+#
+function rename_alias
+{
+    from_alias="$1"
+    to_alias="$2"
+
+    if [[ -z "$from_alias" ]] || [[  -z "$to_alias" ]]; then
+        error "usage: changename alias (-r|--rename) <from> <to>"
+    fi
+
+    # check that the source name exists
+    directory=$(changename alias --get "$from_alias")
+    if [[ -z "$directory" ]]; then
+        error "error: no existing alias with name '$from_alias'"
+    fi
+
+    # check that the destination name isn't taken
+    destination_directory=$(changename alias --get "$to_alias")
+    if [[ ! -z "$destination_directory" ]]; then
+        error "error: alias name '$to_alias' already in use by directory '$destination_directory'"
+    fi
+
+    delete_alias "$from_alias"
+    create_alias "$to_alias" "$directory"
+}
+
+#
 # Delete an alias.
 #
 # $1: the alias to delete
@@ -165,8 +196,10 @@ function delete_alias
 #
 function which_alias
 {
-    if [[ "$1" == "-g" ]] || [[ "$1" == "--get" ]]; then
+    if [[ "$1" =~ ^(-g|--get)$ ]]; then
         get_alias "$2"
+    elif [[ "$1" =~ ^(-r|--rename)$ ]]; then
+        rename_alias "${@:2}"
     else
         create_alias "$@"
     fi

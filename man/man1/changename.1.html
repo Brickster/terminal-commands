@@ -75,6 +75,7 @@
 <p><code>changename</code> <var>name</var><br />
 <code>changename alias</code> <var>alias</var> [<var>directory</var>]<br />
 <code>changename alias</code> (<code>-g</code>|<code>--get</code>) (<var>alias</var>|<var>directory</var>)<br />
+<code>changename alias</code> (<code>-r</code>|<code>--rename</code>) <var>from</var> <var>to</var><br />
 <code>changename aliases</code><br />
 <code>changename unalias</code> <var>alias</var><br />
 <code>changename</code> [(<code>-r</code>|<code>--reset</code>)]<br />
@@ -89,8 +90,13 @@
 
 <dl>
 <dt class="flush"><var>name</var></dt><dd><p>  Set the current window's title to <var>name</var>.</p></dd>
-<dt><code>alias</code> <var>alias</var> [<var>directory</var>]</dt><dd><p>  Create an alias for a directory. If no directory is supplied, the working directory is used.</p></dd>
-<dt><code>-g</code>|<code>--get</code> (<var>alias</var>|<var>directory</var>)</dt><dd><p>  Switches subcommand <code>alias</code> into get mode. The input can be either an <var>alias</var> or a <var>directory</var> and the matching value for an alias definition is printed, if any.</p></dd>
+<dt><code>alias</code> <var>alias</var> [<var>directory</var>]</dt><dd><p>  Create an alias for a directory. If no directory is supplied, the working directory is used.</p>
+
+<dl>
+<dt><code>-g</code>|<code>--get</code> (<var>alias</var>|<var>directory</var>)</dt><dd><p>  Switches <code>alias</code> to get mode. The input can be either an <var>alias</var> or a <var>directory</var> and the matching value for an alias definition is printed, if any.</p></dd>
+<dt><code>-r</code>|<code>--rename</code> <var>from</var> <var>to</var></dt><dd><p>  Switches <code>alias</code> to rename mode. The alias <var>from</var> is renamed to <var>to</var>.</p></dd>
+</dl>
+</dd>
 <dt><code>aliases</code> </dt><dd><p>  Print existing alias definitions.</p></dd>
 <dt><code>unalias</code> <var>alias</var></dt><dd><p>  Delete an alias definition.</p></dd>
 <dt><code>-r</code>|<code>--reset</code></dt><dd><p>  Reset the current window's title.</p></dd>

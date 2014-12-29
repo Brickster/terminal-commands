@@ -16,6 +16,9 @@
 \fBchangename alias\fR (\fB\-g\fR|\fB\-\-get\fR) (\fIalias\fR|\fIdirectory\fR)
 .
 .br
+\fBchangename alias\fR (\fB\-r\fR|\fB\-\-rename\fR) \fIfrom\fR \fIto\fR
+.
+.br
 \fBchangename aliases\fR
 .
 .br
@@ -45,7 +48,12 @@ Create an alias for a directory\. If no directory is supplied, the working direc
 .
 .TP
 \fB\-g\fR|\fB\-\-get\fR (\fIalias\fR|\fIdirectory\fR)
-Switches subcommand \fBalias\fR into get mode\. The input can be either an \fIalias\fR or a \fIdirectory\fR and the matching value for an alias definition is printed, if any\.
+Switches \fBalias\fR to get mode\. The input can be either an \fIalias\fR or a \fIdirectory\fR and the matching value for an alias definition is printed, if any\.
+.
+.TP
+\fB\-r\fR|\fB\-\-rename\fR \fIfrom\fR \fIto\fR
+Switches \fBalias\fR to rename mode\. The alias \fIfrom\fR is renamed to \fIto\fR\.
+
 .
 .TP
 \fBaliases\fR
