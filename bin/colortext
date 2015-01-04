@@ -1,8 +1,9 @@
 #! /bin/bash
-
 #
 # Echo colored text.
 #
+
+. terminal-commands-utils
 
 black='\x1B[0;30m'
 dark_gray='\x1B[1;30m'
@@ -24,17 +25,6 @@ none='\x1B[0m'
 
 colors=('black' 'dark-gray' 'red' 'light-red' 'green' 'light-green' 'orange' 'yellow' 'blue'
     'light-blue' 'purple' 'light-purple' 'cyan' 'light-cyan' 'light-gray' 'white' 'none')
-
-#
-# Echos text to strerr.
-#
-# $1: the text to echo
-#
-function error
-{
-    echo "$1" >&2
-    exit 1
-}
 
 #
 # Echos text in a given color.
@@ -87,15 +77,6 @@ function print_color_examples
 }
 
 #
-# Shows colortext man page.
-#
-function help
-{
-    man colortext
-    exit 0
-}
-
-#
 # Validates that a color is available for printing:
 #
 # $1: the color to validate
@@ -118,13 +99,13 @@ while getopts ":hce-:" opt; do
             case "${OPTARG}" in
                 colors)     print_colors;;
                 examples)   print_color_examples;;
-                help)       help;;
+                help)       show_help;;
                 *)          error "Unimplemented option --${OPTARG}";;
             esac
             ;;
         c)  print_colors;;
         e)  print_color_examples;;
-        h)  help;;
+        h)  show_help;;
         \?) error "Invalid option: -$OPTARG";;
         :)  error "Option -$OPTARG requires an argument.";;
         *)  error "Unimplemented option: -$OPTARG";;
