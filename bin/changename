@@ -167,6 +167,37 @@ function rename_alias
 }
 
 #
+# Move an alias.
+#
+# $1: the old alias directory
+# $2: the new alias directory
+#
+function move_alias
+{
+    from_directory="$1"
+    to_directory="$2"
+
+    if [[ -z "$from_directory" ]] || [[  -z "$to_directory" ]]; then
+        error "usage: changename alias (-m|--move) <from> <to>"
+    fi
+
+    # check that the source directory is already aliased
+    from_alias_name=$(changename alias --get "$from_directory")
+    if [[ -z "$from_alias_name" ]]; then
+        error "error: no existing alias for directory '$from_directory'"
+    fi
+
+    # check that the destination directory isn't already in use
+    to_alias_name=$(changename alias --get "$to_directory")
+    if [[ ! -z "$to_alias_name" ]]; then
+        error "error: an alias already exists for directory '$to_directory'"
+    fi
+
+    delete_alias "$from_alias_name"
+    create_alias "$from_alias_name" "$to_directory"
+}
+
+#
 # Delete an alias.
 #
 # $1: the alias to delete
@@ -202,6 +233,8 @@ function which_alias
         get_alias "$2"
     elif [[ "$1" =~ ^(-r|--rename)$ ]]; then
         rename_alias "${@:2}"
+    elif [[ "$1" =~ ^(-m|--move)$ ]]; then
+        move_alias "${@:2}"
     else
         create_alias "$@"
     fi

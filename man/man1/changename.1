@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "CHANGENAME" "1" "December 2014" "" ""
+.TH "CHANGENAME" "1" "January 2015" "" ""
 .
 .SH "NAME"
 \fBchangename\fR \- change the name of a Terminal window
@@ -17,6 +17,9 @@
 .
 .br
 \fBchangename alias\fR (\fB\-r\fR|\fB\-\-rename\fR) \fIfrom\fR \fIto\fR
+.
+.br
+\fBchangename alias\fR (\fB\-m\fR|\fB\-\-move\fR) \fIfrom\fR \fIto\fR
 .
 .br
 \fBchangename aliases\fR
@@ -53,6 +56,10 @@ Switches \fBalias\fR to get mode\. The input can be either an \fIalias\fR or a \
 .TP
 \fB\-r\fR|\fB\-\-rename\fR \fIfrom\fR \fIto\fR
 Switches \fBalias\fR to rename mode\. The alias \fIfrom\fR is renamed to \fIto\fR\.
+.
+.TP
+\fB\-m\fR|\fB\-\-move\fR \fIfrom\fR \fIto\fR
+Switches \fBalias\fR to move mode\. The alias for directory \fIfrom\fR is moved to \fIto\fR\.
 
 .
 .TP

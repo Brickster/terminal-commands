@@ -6,6 +6,7 @@
 `changename alias` <alias> [<directory>]<br>
 `changename alias` (`-g`|`--get`) (<alias>|<directory>)<br>
 `changename alias` (`-r`|`--rename`) <from> <to><br>
+`changename alias` (`-m`|`--move`) <from> <to><br>
 `changename aliases`<br>
 `changename unalias` (<alias>|<directory>)<br>
 `changename` [(`-r`|`--reset`)]<br>
@@ -29,6 +30,9 @@
 
     * `-r`|`--rename` <from> <to>:
         Switches `alias` to rename mode. The alias <from> is renamed to <to>.
+
+    * `-m`|`--move` <from> <to>:
+        Switches `alias` to move mode. The alias for directory <from> is moved to <to>.
 
 * `aliases` :
     Print existing alias definitions.
