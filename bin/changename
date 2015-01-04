@@ -39,39 +39,6 @@ function name
 }
 
 #
-# Determines if an alias already exists among a set of definitions.
-#
-# $1: alias name
-# $2: alias directory path
-#
-function alias_exists
-{
-    local alias_name="$1"
-    local directory_path="$2"
-
-    # load existing aliases
-    alias_definitions=$(cat "$ALIAS_FILE")
-    IFS=$'\n' read -rd '' -a alias_definitions <<< "$alias_definitions"
-
-    local alias_definition=
-    for alias_definition in "${alias_definitions[@]}"; do
-
-        regex="^$alias_name=.*$"
-        if [[ "$alias_definition" =~ $regex ]]; then
-            return 0
-        fi
-
-        regex="^.*=$directory_path$"
-        if [[ "$alias_definition" =~ $regex ]]; then
-            return 0
-        fi
-
-    done
-
-    return 1
-}
-
-#
 # Prints the matching value of an alias definition by alias name or directory.
 #
 # $1: the search term
@@ -128,7 +95,8 @@ function create_alias
         touch "$ALIAS_FILE"
     fi
 
-    if alias_exists "$alias_to_create" "$alias_directory"; then
+
+    if [[ -z $(get_alias "$1") ]]; then
         error "error: alias already in use or directory already aliased"
     else
         echo "$alias_to_create=$alias_directory" >> "$ALIAS_FILE"
@@ -251,15 +219,12 @@ function use_alias
     local alias_definitions=$(cat "$ALIAS_FILE")
     IFS=$'\n' read -rd '' -a alias_definitions <<< "$alias_definitions"
 
-    local alias_definition=
-    for alias_definition in "${alias_definitions[@]}"; do
-        regex="^(.*)=$directory$"
-        if [[ "$alias_definition" =~ $regex ]]; then
-            name "${BASH_REMATCH[1]}"
-        fi
-    done
+    alias_name=$(get_alias "$directory")
+    if [[ -z "$alias_name" ]]; then
+        error "error: no alias for directory '$PWD'"
+    fi
 
-    error "error: no alias for directory '$PWD'"
+    name "$alias_name"
 }
 
 new_name="$1"
