@@ -51,3 +51,8 @@
 
 * `-a`|`--use-alias`:
     Name the window according to the working directory's alias.
+
+## FILES
+
+* $HOME/.changename_aliases:
+    This file contains all existing alias mappings.
