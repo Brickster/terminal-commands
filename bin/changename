@@ -77,7 +77,7 @@ function create_alias
     fi
 
 
-    if [[ -z $(get_alias "$1") ]]; then
+    if [[ ! -z $(get_alias "$1") ]]; then
         error "error: alias already in use or directory already aliased"
     else
         echo "$alias_to_create=$alias_directory" >> "$ALIAS_FILE"
