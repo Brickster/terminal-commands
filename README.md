@@ -2,7 +2,24 @@
 
 A collection of bash commands
 
-## [changename](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Brickstertwo/commands/master/man/man1/changename.1.html)
+```bash
+make [install]
+```
+```bash
+export PATH="$PATH:/path/to/terminal-commands/repository/bin"
+```
+
+## Uninstall
+
+```bash
+make uninstall
+```
+```bash
+# remote the preveously added line
+```
+
+## Commands
+### [changename][]
 
 Change the name of a Terminal window.
 
@@ -19,7 +36,7 @@ changename [(-h|--help)]
 changename [(-d|--directory)] [(-a|--use-alias)]
 ```
 
-## [colortext](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Brickstertwo/commands/master/man/man1/colortext.1.html)
+### [colortext][]
 
 Echo colored text.
 
@@ -29,3 +46,6 @@ colortext [-c|--color]
 colortext [-e|--examples]
 colortext [-h|--help]
 ```
+
+[changename]: http://htmlpreview.github.io/?https://raw.githubusercontent.com/Brickstertwo/commands/master/man/man1/changename.1.html
+[colortext]: http://htmlpreview.github.io/?https://raw.githubusercontent.com/Brickstertwo/commands/master/man/man1/colortext.1.html
