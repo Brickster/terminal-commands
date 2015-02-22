@@ -3,6 +3,8 @@
 # Echo colored text.
 #
 
+readonly VERSION="0.1.0"
+
 . terminal-commands-utils
 
 black='\x1B[0;30m'
@@ -93,19 +95,21 @@ function validate_color
     error "$error_message"
 }
 
-while getopts ":hce-:" opt; do
+while getopts ":hvce-:" opt; do
     case $opt in
         -)
             case "${OPTARG}" in
                 colors)     print_colors;;
                 examples)   print_color_examples;;
                 help)       show_help;;
+                version)    show_version "$VERSION";;
                 *)          error "Unimplemented option --${OPTARG}";;
             esac
             ;;
         c)  print_colors;;
         e)  print_color_examples;;
         h)  show_help;;
+        v)  show_version "$VERSION";;
         \?) error "Invalid option: -$OPTARG";;
         :)  error "Option -$OPTARG requires an argument.";;
         *)  error "Unimplemented option: -$OPTARG";;

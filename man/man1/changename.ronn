@@ -11,6 +11,7 @@
 `changename unalias` (<alias>|<directory>)<br>
 `changename` [(`-r`|`--reset`)]<br>
 `changename` [(`-h`|`--help`)]<br>
+`changename` (`-v`|`--version`)<br>
 `changename` [(`-d`|`--directory`)] [(`-a`|`--use-alias`)]
 
 ## DESCRIPTION
@@ -45,6 +46,9 @@
 
 * `-h`|`--help`:
     Display man page.
+
+* `-v`|`--version`:
+    Print version.
 
 * `-d`|`--directory`:
     Use the current directory's name.

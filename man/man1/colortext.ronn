@@ -2,10 +2,11 @@
 
 ## SYNOPSIS
 
-`colortext` <color> [`-n`] <text>  
-`colortext` [`-c`|`--colors`]  
-`colortext` [`-e`|`--examples`]  
-`colortext` [`-h`|`--help`]
+`colortext` <color> [`-n`] <text><br>
+`colortext` [`-c`|`--colors`]<br>
+`colortext` [`-e`|`--examples`]<br>
+`colortext` [`-h`|`--help`]<br>
+`colortext` (`-v`|`--version`)
 
 ## DESCRIPTION
 
@@ -27,3 +28,6 @@
 
 * `-h`|`--help`:
     Display man page.
+
+* `-v`|`--version`:
+    Print version.
