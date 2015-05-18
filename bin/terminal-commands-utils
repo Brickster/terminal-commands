@@ -52,14 +52,16 @@ function usage_error
     exit 1
 }
 
-while getopts ":v-:" opt; do
+while getopts ":vh-:" opt; do
     case $opt in
         -)
             case "${OPTARG}" in
                 version)    show_version "$_VERSION";;
+                help)       show_help;;
             esac
             ;;
         v)  show_version "$_VERSION";;
+        h)  show_help;;
     esac
 done
 OPTIND=1
