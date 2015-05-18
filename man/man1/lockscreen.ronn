@@ -2,7 +2,7 @@
 
 ## SYNOPSIS
 
-`lockscreen`
+`lockscreen`<br>
 `lockscreen` [(`-v`|`--version`)] [(`-h`|`--help`)]
 
 ## DESCRIPTION
