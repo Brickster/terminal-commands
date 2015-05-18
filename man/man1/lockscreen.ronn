@@ -1,0 +1,18 @@
+# lockscreen(1) -- show the lockscreen
+
+## SYNOPSIS
+
+`lockscreen`
+`lockscreen` [(`-v`|`--version`)] [(`-h`|`--help`)]
+
+## DESCRIPTION
+
+Shows the lockscreen.
+
+## OPTIONS
+
+* `-h`|`--help`:
+    Display man page.
+
+* `-v`|`--version`:
+    Print version.
