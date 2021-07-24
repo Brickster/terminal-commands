@@ -1,0 +1,86 @@
+#! /bin/bash
+
+# Rename comic backups
+# Where applicable, uninitialized group errors are piped to /dev/null.
+# NOTE: due to a limitation/feature in rename, passing a filepath will rename the path, as well
+
+function show_help
+{
+    echo "rename_comics [-h] [-v] [-3] [COMICS ...]"
+    exit $1
+}
+
+function show_version
+{
+    echo "1.0.0"
+    exit 0
+}
+
+function error
+{
+    echo "$1" >&2
+    show_help 1
+}
+
+digits=2
+while getopts ":d:hv-:" opt; do
+    case $opt in
+        -)
+            case "${OPTARG}" in
+                digits)
+                            digits="${!OPTIND}"
+                            OPTIND=$(( $OPTIND + 1 ))
+                            ;;
+                help)       show_help 0;;
+                version)    show_version "$VERSION";;
+                *)          error "Unimplemented option --${OPTARG}";;
+            esac
+            ;;
+        d)  digits=$OPTARG;;
+        h)  show_help 0;;
+        v)  show_version "$VERSION";;
+        \?) error "Invalid option: -$OPTARG";;
+        :)  error "Option -$OPTARG requires an argument.";;
+        *)  error "Unimplemented option: -$OPTARG";;
+    esac
+done
+
+# get comics
+shift $((OPTIND -1))
+comics="$@"
+if [[ -z "$comics" ]]; then
+    comics="*.cbz"
+fi
+if [[ "$comics" == *\/* ]]; then
+    error "Comics cannot contain directories"
+fi
+
+# validate digits is numeric
+if ! [[ "$digits" =~ ^[0-9]+$ ]] ; then
+   error 'Number of digits must be a number'
+fi
+
+rename --force --lower-case $comics
+
+# deduplicate dashes (and any confusibles)
+rename 's/[–-]+/-/g' $comics
+
+# remove "of x"
+rename 's/-\(?of-\d+\)?//g' $comics
+
+# remove year ranges
+rename 's/\(\d{4}-?(\d{4})?\)-//g' $comics
+
+# add leading zeroes
+current_digits=1
+while [[ $current_digits -lt $digits ]]; do
+    rename 's/-#?(\d{'$current_digits'})(-\d+)?\.cbz$/-0$1$2.cbz/g' $comics 2>/dev/null
+    current_digits=$((current_digits+1))
+done
+
+# remove "#" before issue number (must be after leading zero)
+rename 's/-#?(\d+)(-\d+)?\.cbz$/-$1$2.cbz/g' $comics 2>/dev/null
+
+# remove authors
+rename 's/-by-kirkman-de-felici//' $comics
+rename 's/-by-kirkman-azaceta//' $comics

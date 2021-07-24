@@ -1,0 +1,146 @@
+#! /usr/bin/env python
+# based on https://robinpowered.com/blog/best-practice-system-for-organizing-and-tagging-github-issues/
+
+import argparse
+import sys
+
+import requests
+
+_API = 'https://api.github.com'
+_LABELS = {
+    # platform
+    'mac': {'color': 'c3d3ef', 'description': '', 'required': False},
+    'windows': {'color': 'c3d3ef', 'description': '', 'required': False},
+
+    # problems
+    'bug': {'color': 'dc4e4d', 'description': '', 'required': True},
+    'security': {'color': 'dc4e4d', 'description': '', 'required': True},
+
+    # mindless
+    'chore': {'color': 'fcf2c6', 'description': '', 'required': False},
+    'legal': {'color': 'fcf2c6', 'description': '', 'required': False},
+
+    # experience
+    'copy': {'color': 'f6c480', 'description': '', 'required': False},
+    'design': {'color': 'f6c480', 'description': '', 'required': False},
+    'ux': {'color': 'f6c480', 'description': '', 'required': False},
+    'documentation': {'color': 'f6c480', 'description': '', 'required': True},
+
+    # environment
+    'staging': {'color': 'f2d1c6', 'description': '', 'required': False},
+    'test': {'color': 'f2d1c6', 'description': '', 'required': False},
+    'production': {'color': 'f2d1c6', 'description': '', 'required': False},
+
+    # feedback
+    'discussion': {'color': 'bc3f7a', 'description': '', 'required': False},
+    'rfc': {'color': 'bc3f7a', 'description': '', 'required': False},
+    'question': {'color': 'bc3f7a', 'description': '', 'required': False},
+
+    # improvements
+    'enhancement': {'color': '76bcf9', 'description': '', 'required': True},
+    'optimization': {'color': '76bcf9', 'description': '', 'required': False},
+    'code style': {'color': '76bcf9', 'description': '', 'required': False},
+
+    # additions
+    'feature': {'color': '9dc865', 'description': '', 'required': True},
+
+    # pending
+    'in progress': {'color': 'f3cc46', 'description': '', 'required': True},
+    'watchlist': {'color': 'f3cc46', 'description': '', 'required': False},
+
+    # inactive
+    'invalid': {'color': 'd3dae0', 'description': '', 'required': False},
+    "won't fix": {'color': 'd3dae0', 'description': '', 'required': True},
+    'duplicate': {'color': 'd3dae0', 'description': '', 'required': False},
+    'on hold': {'color': 'd3dae0', 'description': '', 'required': False},
+}
+# GitHub default labels to remove
+_REMOVE_LABELS = [
+    'help wanted', 'wontfix'
+]
+
+
+def _main(token, user, repo, dry_run):
+    # get current labels
+    # create dictionary from existing labels
+    existing_labels = _get_labels(token, user, repo)
+
+    # for each label
+    for label_name, label in _LABELS.iteritems():
+        if label_name in existing_labels:
+            if _requires_update(label, existing_labels[label_name]):
+                _push_label(False, token, user, repo, label_name, label, dry_run)
+        elif label['required']:
+            _push_label(True, token, user, repo, label_name, label, dry_run)
+
+    # remove default labels that won't be used
+    for label_name in _REMOVE_LABELS:
+        if label_name in existing_labels:
+            _delete_label(token, user, repo, label_name, dry_run)
+
+
+def _requires_update(label, existing_label):
+    return label['description'] != existing_label['description'] or label['color'] != existing_label['color']
+    # return label['color'] != existing_label['color']
+
+
+def _default_headers():
+    return {'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json'}
+
+
+def _get_labels(token, user, repo):
+    response = requests.get(
+        '{}/repos/{}/{}/labels'.format(_API, user, repo),
+        auth=(user, token),
+        headers=_default_headers()
+    )
+    if response.status_code != 200:
+        sys.exit('Error retrieving labels')
+
+    labels = {l['name']: {'color': l['color'], 'description': l['description']} for l in response.json()}
+    return labels
+
+
+def _push_label(is_new, token, user, repo, label_name, label, dry_run):
+    del label['required']
+    if dry_run:
+        print "Would {} /repos/{}/{}/labels/{}: {}".format(
+            'POST' if is_new else 'PATCH', user, repo, label_name, str(label)
+        )
+        return
+
+    url = '{}/repos/{}/{}/labels'.format(_API, user, repo)
+    if is_new:
+        label['name'] = label_name
+        response = requests.post(url, auth=(user, token), headers=_default_headers(), json=label)
+        success_code = 201
+    else:
+        response = requests.patch(url + '/' + label_name, auth=(user, token), headers=_default_headers(), json=label)
+        success_code = 200
+    mode = 'create' if is_new else 'update'
+    if response.status_code != success_code:
+        sys.exit('Failed to {} label {}: {} {}'.format(mode, label_name, str(response.status_code), response.json()))
+    print 'Successfully {} /repos/{}/{}/labels/{}'.format(mode, user, repo, label_name)
+
+
+def _delete_label(token, user, repo, label_name, dry_run):
+    if dry_run:
+        print "Would DELETE /repos/{}/{}/labels/{}".format(user, repo, label_name)
+        return
+
+    url = '{}/repos/{}/{}/labels/{}'.format(_API, user, repo, label_name)
+    response = requests.delete(url, auth=(user, token), headers=_default_headers())
+    if response.status_code != 204:
+        sys.exit('Failed to DELETE label {}: {} {}'.format(label_name, str(response.status_code), response.json()))
+    print 'Successfully deleted /repos/{}/{}/labels/{}'.format(user, repo, label_name)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        prog='github_labels', version='github_labels 1.0.0'
+    )
+    parser.add_argument('--token', help='access token', required=True)
+    parser.add_argument('--user', '-u', help='user name', required=True)
+    parser.add_argument('--repo', '-r', help='repository name', required=True)
+    parser.add_argument('--dry-run', '-d', help='dry-run', default=False, action='store_true')
+    _main(**vars(parser.parse_args()))
